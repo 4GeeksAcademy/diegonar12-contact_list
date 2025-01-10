@@ -11,15 +11,15 @@ export const Demo = () => {
 	return (
 		<div className="container">
 			<ul className="list-group mt-3">
-				{store.contactList.map((contact, index) => {
+				{store.contacts.map((contact, index) => {
 					return (
 						<ContactCard key={contact.id} item={contact} index={index} />
 					)
 				})}
 			</ul>
 			<br />
-			<Link to="/">
-				<button className="btn btn-primary">Otra vista</button>
+			<Link to="/" aria-label="Go to home">
+				<button className="btn btn-primary">Volver al inicio</button>
 			</Link>
 		</div>
 	);
