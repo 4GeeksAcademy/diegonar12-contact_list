@@ -18,7 +18,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 			
 		},
 		actions: {
-				
+				createUser: async () =>{
+					fetch ("https://playground.4geeks.com/contact/agendas/4geeks-user",{
+						method: "POST"
+
+					})
+				}
 
 			}
 		}

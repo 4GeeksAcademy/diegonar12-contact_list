@@ -1,22 +1,23 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { useContext } from 'react'
-import { Context } from '../store/appContext'
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 
-const ContactCard = ({item}) => {
-
-    const {store, actions} = useContext(Context)
+const ContactCard = ({ item }) => {
+    const { store, actions } = useContext(Context);
 
     return (
-        <div className="card mb-3" key={item.id} style={{ width: '540px' }}>
+        <div className="card mb-3" style={{ width: "540px" }}>
             <div className="row g-0">
                 <div className="col-md-4">
-                    <img src="https://picsum.photos/170/170/" className="img-fluid rounded-circle p-3" alt="foto" />
+                    <img
+                        src="https://picsum.photos/170/170/"
+                        className="img-fluid rounded-circle p-3"
+                        alt="Contact avatar"
+                    />
                 </div>
                 <div className="col-md-8">
                     <div className="card-body">
-                        <p className="card-text">{item.name}</p>
-                        <p className="card-text">{item.address}</p>
+                        <h5 className="card-title">{item.name || "Name not available"}</h5>
+                        <p className="card-text">{item.address || "Address not available"}</p>
                         <p className="card-text">
                             <small className="text-muted">Last updated 3 mins ago</small>
                         </p>
@@ -24,8 +25,7 @@ const ContactCard = ({item}) => {
                 </div>
             </div>
         </div>
+    );
+};
 
-    )
-}
-
-export default ContactCard
+export default ContactCard;
