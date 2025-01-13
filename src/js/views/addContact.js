@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 import "../../styles/demo.css";
-import ContactCard from "../component/ContactCard";
+import ContactCard from "../component/ContactCard.jsx";
 
-export const Demo = () => {
+export const AddContact = () => {
     const { store } = useContext(Context);
 
     return (
@@ -13,7 +13,7 @@ export const Demo = () => {
             <ul className="list-group mt-3">
                 {store.contacts && store.contacts.length > 0 ? (
                     store.contacts.map((contact, index) => (
-                        <ContactCard key={contact.id || index} item={contact} index={index} />
+                        <ContactCard item={contact} index={index} key={index} />
                     ))
                 ) : (
                     <p>No contacts available</p>
@@ -26,4 +26,3 @@ export const Demo = () => {
         </div>
     );
 };
-

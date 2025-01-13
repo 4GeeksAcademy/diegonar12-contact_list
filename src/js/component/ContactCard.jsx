@@ -2,14 +2,18 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 
 const ContactCard = ({ item }) => {
-    const { store, actions } = useContext(Context);
+    const { actions } = useContext(Context);
+
+    const handleDelete = () =>{
+        actions.deleteContact(item.id)
+    };
 
     return (
         <div className="card mb-3" style={{ width: "540px" }}>
             <div className="row g-0">
                 <div className="col-md-4">
                     <img
-                        src="https://picsum.photos/170/170/"
+                        src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=2969&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         className="img-fluid rounded-circle p-3"
                         alt="Contact avatar"
                     />
@@ -17,8 +21,11 @@ const ContactCard = ({ item }) => {
                 <div className="col-md-8">
                     <div className="card-body">
                         <h5 className="card-title">{item.name || "Name not available"}</h5>
+                        <p className="card-text">{item.email || "Address not available"}</p>
+                        <p className="card-text">{item.phone || "Address not available"}</p>
                         <p className="card-text">{item.address || "Address not available"}</p>
                         <p className="card-text">
+                        <button onClick={handleDelete}>Delete</button>
                             <small className="text-muted">Last updated 3 mins ago</small>
                         </p>
                     </div>
