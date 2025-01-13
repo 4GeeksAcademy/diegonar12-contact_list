@@ -6,41 +6,41 @@ const getState = ({ getStore, getActions, setStore }) => {
 			currentName: ""
 		},
 		actions: {
-			getContacts: async (nameAgenda) => {
+			getOrFetchContacts: async (agendaName) => {
 				try {
-
-					const response0 = await fetch("https://playground.4geeks.com/contact/agendas")
+					const response0 = await fetch("https://playground.4geeks.com/contact/agendas");
 					if (!response0.ok) {
-						throw new Error("No sirvió", response0)
+						throw new Error("Error al obtener agendas");
 					}
+			
 					const data0 = await response0.json();
-					const userExist = data0.agendas.find(item => item.slug === nameAgenda)
+					const userExist = data0.agendas.find(item => item.slug === agendaName);
+			
 					if (!userExist) {
-						const newResponse = await fetch(`https://playground.4geeks.com/contact/agendas/${nameAgenda}`, {
+						const newResponse = await fetch(`https://playground.4geeks.com/contact/agendas/${agendaName}`, {
 							method: "POST",
 							headers: {
 								'Content-Type': 'application/json'
 							},
 						});
 						if (!newResponse.ok) {
-							throw new Error("Algo salio mal")
+							throw new Error("Error al crear agenda");
 						}
 					}
-					const response = await fetch(`https://playground.4geeks.com/contact/agendas/${nameAgenda}/contacts`)
+			
+					const response = await fetch(`https://playground.4geeks.com/contact/agendas/${agendaName}/contacts`);
 					if (!response.ok) {
-						throw new Error("Algo salio mal")
+						throw new Error("Error al obtener contactos");
 					}
-
+			
 					const data = await response.json();
-
 					const store = getStore();
-					setStore({ ...store, contacts: data.contacts })
+					setStore({ ...store, contacts: data.contacts });
 				} catch (error) {
-					console.error(error);
-
+					console.error("Error en getOrFetchContacts:", error);
 				}
 			},
-
+			
 			setCurrentName: (actualName) => {
 				const store= getStore();
 				setStore({...store, currentName:actualName});
@@ -48,39 +48,48 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			addContact: async (contact) => {
 				try {
-					let store= getStore();
-					const response = await fetch(`https://playground.4geeks.com/contact/agendas/${store.currentName}/contacts`, {
+					const store = getStore();
+					const response = await fetch(`https://playground.4geeks.com/contact/agendas/alipcontacts`, {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify(contact),
 					});
+			
 					if (!response.ok) {
-						throw new Error("Algo salio mal")
+						throw new Error("Error al agregar contacto");
 					}
-					let data= await response.json();
-
-					if (data.id){
+			
+					const data = await response.json();
+			
+					if (data.id) {
 						return true;
-					} else{
+					} else {
 						return false;
 					}
 				} catch (error) {
-					console.error("error al agregar contacto");
+					console.error("Error al agregar contacto:", error);
 				}
 			},
+			
 
-			deleteContact: async () => {
-				try {
-					const response = await fetch(`https://playground.4geeks.com/contact/agendas/${currentName}/contacts/${contact.id}`, {
-						method: "DELETE",
-					});
-					if (response.ok) {
-						getActions().fetchContacts();
-					}
-				} catch (error) {
-					console.error("Error al elimanar contacto");
-				}
-			},
+			deleteContact: async (id) => {
+                try {
+                    const response = await fetch(
+                        `https://playground.4geeks.com/contact/agendas/alip/contacts/${id}`,
+                        {
+                            method: "DELETE",
+                        }
+                    );
+                    if (!response.ok) {
+                        throw new Error("No se pudo eliminar el contacto.");
+                    }
+                    const store = getStore();
+                    const updatedContacts = store.contactList.filter((contact) => contact.id !== id);
+                    setStore({ ...store, contacts: updatedContacts });
+                } catch (error) {
+                    console.error("Error eliminando el contacto:", error);
+                }
+            },
 		},
 	};
 };

@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
-import { Home } from "./views/home";
-import { AddContact } from "./views/addContact"; // Asegúrate de que la ruta sea correcta.
+import { Home } from "./views/home.js";
+import { AddContact } from "./views/addContact.js";
 
 import injectContext from "./store/appContext";
 

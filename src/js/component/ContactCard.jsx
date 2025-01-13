@@ -1,12 +1,13 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 
-const ContactCard = ({ item }) => {
+const ContactCard = ({ contact }) => {
     const { actions } = useContext(Context);
 
-    const handleDelete = () =>{
-        actions.deleteContact(item.id)
+    const handleDelete = () => {
+        actions.deleteContact(contact.id);
     };
+    
 
     return (
         <div className="card mb-3" style={{ width: "540px" }}>
@@ -20,10 +21,10 @@ const ContactCard = ({ item }) => {
                 </div>
                 <div className="col-md-8">
                     <div className="card-body">
-                        <h5 className="card-title">{item.name || "Name not available"}</h5>
-                        <p className="card-text">{item.email || "Address not available"}</p>
-                        <p className="card-text">{item.phone || "Address not available"}</p>
-                        <p className="card-text">{item.address || "Address not available"}</p>
+                        <h5 className="card-title">{contact.name || "Name not available"}</h5>
+                        <p className="card-text">{contact.email || "Address not available"}</p>
+                        <p className="card-text">{contact.phone || "Address not available"}</p>
+                        <p className="card-text">{contact.address || "Address not available"}</p>
                         <p className="card-text">
                         <button onClick={handleDelete}>Delete</button>
                             <small className="text-muted">Last updated 3 mins ago</small>
